@@ -1,0 +1,9 @@
+config SECURITY_MACL
+	bool "Mandatory Access Control Lists"
+	depends on SECURITY
+	default n
+	help
+	  This selects Mandatory Access Control Lists (MACL).
+	  You will also need a labeled filesystem.
+	  If you are unsure how to answer this question, answer N.
+
