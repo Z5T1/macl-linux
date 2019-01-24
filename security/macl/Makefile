@@ -4,5 +4,7 @@
 # the kernel tree.
 #
 
-obj-$(CONFIG_SECURITY_MACL) := macl.o
+obj-$(CONFIG_SECURITY_MACL) := macl.o 
+
+macl-y := hooks.o lists.o
 
