@@ -55,3 +55,69 @@ void macl_destroy_rule(struct macl_rule* rule)
 	kfree(rule);
 }
 
+/** Prints a macl_rule to a string.
+  *
+  * @param str		A pointer to the string to store the output in.
+  * @param rule		A pointer to the  macl_rule to print.
+  */
+void macl_snprint_rule(char* str, size_t size, struct macl_rule* rule) {
+	char* action_str;
+	char* event_str;
+	char* flag_str;
+
+	switch (rule->action) {
+		case MACL_ACTION_BLOCK:
+			action_str = "block";
+			break;
+		case MACL_ACTION_PASS:
+			action_str = "pass";
+			break;
+		default:
+			action_str = "";
+	}
+
+	switch (rule->event) {
+		case MACL_EVENT_FILE_READ:
+			event_str = "read";
+			break;
+		case MACL_EVENT_FILE_WRITE:
+			event_str = "write";
+			break;
+		case MACL_EVENT_FILE_EXECUTE:
+			event_str = "execute";
+			break;
+		default:
+			event_str = "";
+	}
+
+	// Note: the log string must have a space at the end.
+	if (rule->flags & MACL_FLAG_LOG)
+		flag_str = "log ";
+	else
+		flag_str = "";
+
+	snprintf(str, size, "%s %s %son %s",
+		action_str, event_str, flag_str, rule->path);
+}
+
+/** Converts a macl_rule to a string. The resulting string must be freed by the
+  * caller using kfree.
+  *
+  * @param rule		A pointer to the macl_rule structure to convert.
+  * 
+  * @return A pointer to the rule string, which must be freed by the caller
+  * using kfree.
+  */
+char* macl_rule_to_string(struct macl_rule* rule) {
+	char* str;
+	size_t len;
+
+	/* action (6) + space + event (7) + space + max flag size (4) +
+ 	 * on (2) + space + path (variable) + NULL = 23 + strlen(path) */
+	len = 23 + strlen(rule->path);
+	str = kmalloc(len, GFP_KERNEL);
+	macl_snprint_rule(str, len, rule);
+
+	return str;
+}
+
