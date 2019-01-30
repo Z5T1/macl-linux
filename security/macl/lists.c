@@ -58,14 +58,17 @@ void macl_destroy_rule(struct macl_rule* rule)
 /** Prints a macl_rule to a string.
   *
   * @param str		A pointer to the string to store the output in.
+  * @param size		The size of the buffer, including trailing NULL space.
   * @param rule		A pointer to the  macl_rule to print.
   */
-void macl_snprint_rule(char* str, size_t size, struct macl_rule* rule) {
+void macl_snprint_rule(char* str, size_t size, struct macl_rule* rule)
+{
 	char* action_str;
 	char* event_str;
 	char* flag_str;
 
-	switch (rule->action) {
+	switch (rule->action)
+	{
 		case MACL_ACTION_BLOCK:
 			action_str = "block";
 			break;
@@ -76,7 +79,8 @@ void macl_snprint_rule(char* str, size_t size, struct macl_rule* rule) {
 			action_str = "";
 	}
 
-	switch (rule->event) {
+	switch (rule->event)
+	{
 		case MACL_EVENT_FILE_READ:
 			event_str = "read";
 			break;
@@ -108,7 +112,8 @@ void macl_snprint_rule(char* str, size_t size, struct macl_rule* rule) {
   * @return A pointer to the rule string, which must be freed by the caller
   * using kfree.
   */
-char* macl_rule_to_string(struct macl_rule* rule) {
+char* macl_rule_to_string(struct macl_rule* rule)
+{
 	char* str;
 	size_t len;
 
