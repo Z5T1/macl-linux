@@ -9,17 +9,33 @@
 
 #include <linux/xattr.h>
 
-#include "lists.h"
+#include "rule.h"
+#include "list.h"
+#include "list_manager.h"
+
+// A list of all the MACL lists
+static struct macl_lists_list_node* macl_lists;
+
+static void macl_test(void);
 
 /** This is the main init function for MACL. */
 static __init int macl_init(void)
+{
+	printk(KERN_INFO "MACL: Initializing\n");
+
+	//macl_lists = kmalloc(sizeof(struct macl_lists_list_node), GFP_KERNEL);
+
+	macl_test();
+
+	return 0;
+}
+
+static void macl_test(void)
 {
 	struct macl_rule* rule;
 	struct macl_list* list;
 	struct macl_list_node* node;
 	char* rule_str;
-
-	printk(KERN_INFO "MACL: Initializing\n");
 
 	// Testing code for macl_rule functions
 	rule = macl_create_rule(
@@ -53,7 +69,6 @@ static __init int macl_init(void)
 
 	macl_destroy_list(list);
 
-	return 0;
 }
 
 __initcall(macl_init)

@@ -6,5 +6,5 @@
 
 obj-$(CONFIG_SECURITY_MACL) := macl.o 
 
-macl-y := hooks.o lists.o
+macl-y := hooks.o list.o rule.o list_manager.o
 
