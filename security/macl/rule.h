@@ -7,6 +7,8 @@
  *
  */
 
+#include <linux/slab.h>
+
 #ifndef _MACL_RULE_H_
 #define _MACL_RULE_H_
 
