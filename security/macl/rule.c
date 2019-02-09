@@ -80,13 +80,13 @@ void macl_snprint_rule(char* str, size_t size, struct macl_rule* rule)
 
 	switch (rule->event)
 	{
-		case MACL_EVENT_FILE_READ:
+		case MACL_EVENT_TYPE_FILE_READ:
 			event_str = "read";
 			break;
-		case MACL_EVENT_FILE_WRITE:
+		case MACL_EVENT_TYPE_FILE_WRITE:
 			event_str = "write";
 			break;
-		case MACL_EVENT_FILE_EXECUTE:
+		case MACL_EVENT_TYPE_FILE_EXECUTE:
 			event_str = "execute";
 			break;
 		default:
