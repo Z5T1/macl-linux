@@ -28,12 +28,12 @@ static int macl_file_open(struct file* f) {
 
 	path = d_path(&f->f_path, buffer, PATH_MAX);
 
-	if (f->f_mode & FMODE_READ)
-		printk(KERN_INFO "MACL: Read file %s\n", path);
-	if (f->f_mode & FMODE_WRITE)
-		printk(KERN_INFO "MACL: Write file %s\n", path);
 	if (current->in_execve)
 		printk(KERN_INFO "MACL: Execute file %s\n", path);
+	else if (f->f_mode & FMODE_READ)
+		printk(KERN_INFO "MACL: Read file %s\n", path);
+	else if (f->f_mode & FMODE_WRITE)
+		printk(KERN_INFO "MACL: Write file %s\n", path);
 
 	return 0;
 }
